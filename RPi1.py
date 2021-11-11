@@ -16,9 +16,9 @@ GPIO.setup(buzzer, GPIO.OUT)
 
 parking_lot_map = {
     (23, 24): 1,
-    (20, 21): 2,
+    (17, 27): 2,
     (13, 19): 3,
-    (17, 27): 4,
+    (20, 21): 4
 }
 
 
@@ -65,16 +65,18 @@ def detect_vehicle(TRIG, ECHO):
     elif distance < 5:
         print("Distance is < 5 & >= 3")
         call_buzzer(False)
-        update_parking_lot_status(parking_lot_map[(TRIG, ECHO)])
+        update_parking_lot_status(parking_lot_map[(TRIG, ECHO)], 1)
     else:
+        update_parking_lot_status(parking_lot_map[(TRIG, ECHO)], 0)
+        call_buzzer(False)
         print("No vehicle detected")
 
 
-def update_parking_lot_status(parking_space_id):
+def update_parking_lot_status(parking_space_id, status):
     try:
         print("Went into update_parking_lot_status() function")
         resp = requests.post(
-            f"https://iot-smart-parking-lot.herokuapp.com/update-parking-lot?slot_number={parking_space_id}")
+            f"https://iot-smart-parking-lot.herokuapp.com/update-parking-lot?slot_number={parking_space_id}&status={status}")
         print(f"Response from server: {resp.json()}")
     except Exception as e:
         print(e)
