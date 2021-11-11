@@ -8,14 +8,14 @@ import datetime
 import Adafruit_CharLCD as LCD  # pip3 install Adafruit-CharLCD
 from gpiozero import Servo  # sudo apt install python3-gpiozero
 
-SERVO_PIN = 25
-servo = Servo(SERVO_PIN)
+# SERVO_PIN = 25
+# servo = Servo(SERVO_PIN)
 
 GATE_ULTRASONIC_TRIGGER_PIN = 23
 GATE_ULTRASONIC_ECHO_PIN = 24
 IR_SENSOR_PIN = 17
-GPIO.setup(IR_SENSOR_PIN, GPIO.IN)
-GPIO.setmode(GPIO.BOARD)
+
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(3, GPIO.OUT)
 pwm = GPIO.PWM(3, 50)
 pwm.start(0)
