@@ -7,12 +7,12 @@ from time import sleep
 
 # Disable warnings
 GPIO.setwarnings(False)
-
+GPIO.setmode(GPIO.BCM)
 
 # Set buzzer - pin 23 as output
 buzzer = 23
 GPIO.setup(buzzer, GPIO.OUT)
-GPIO.setmode(GPIO.BCM)
+
 
 parking_lot_map = {
     (23, 24): 1,
@@ -73,8 +73,9 @@ def detect_vehicle(TRIG, ECHO):
 def update_parking_lot_status(parking_space_id):
     try:
         print("Went into update_parking_lot_status() function")
-        requests.post(
+        resp = requests.post(
             f"https://iot-smart-parking-lot.herokuapp.com/update-parking-lot?slot_number={parking_space_id}")
+        print(f"Response from server: {resp.json()}")
     except Exception as e:
         print(e)
 
@@ -92,7 +93,7 @@ if __name__ == "__main__":
         try:
             for key, value in parking_lot_map.items():
                 detect_vehicle(key[0], key[1])
-            sleep(1)
+                sleep(1)
         except KeyboardInterrupt:
             print("Exiting . . .")
             GPIO.cleanup()
