@@ -28,8 +28,7 @@ lcd_backlight = 2
 lcd_columns = 16
 lcd_rows = 2
 
-lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5,
-                           lcd_d6, lcd_d7, lcd_columns, lcd_rows, lcd_backlight)
+# lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5,lcd_d6, lcd_d7, lcd_columns, lcd_rows, lcd_backlight)
 
 
 def fetch_parking_lot_status():
@@ -72,12 +71,12 @@ def detect_car_at_entry_gate():
     distance = measure_vehicle_distance(GATE_ULTRASONIC_ECHO_PIN,
                                         GATE_ULTRASONIC_TRIGGER_PIN)
     print(f"Ultrasonic Sensor value (Detect car func): {distance}")
-    if distance < 2:
+    if distance < 5:
         print("Gone into if statement executed when something is detected in IR sensor")
         if fetch_parking_lot_status() == 8:
             print("Parking lot is full")
-            lcd.clear()
-            lcd.message("Sorry, parking lot is full")
+            # lcd.clear()
+            # lcd.message("Sorry, parking lot is full")
         else:
             generate_otp()
             for i in range(3):
@@ -97,9 +96,9 @@ def generate_otp():
 
 def display_LCD(text):
     print("Went into display_LCD() function")
-    lcd.clear()
+    # lcd.clear()
     print(f"Text to be displayed on LCD : {text}")
-    lcd.message(text)
+    # lcd.message(text)
 
 
 def open_gate():
@@ -110,7 +109,7 @@ def open_gate():
     otp_status = response['otp_status']
     print(f"OTP Status : {otp_status}")
     if otp_status == 'success':
-        lcd.clear()
+        # lcd.clear()
         operate_motor()
 
 
