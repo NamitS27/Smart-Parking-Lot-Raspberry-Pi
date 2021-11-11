@@ -110,14 +110,17 @@ def open_gate():
     print(f"OTP Status : {otp_status}")
     if otp_status == 'success':
         # lcd.clear()
-        operate_motor()
+        operate_motor(90)
 
 
-def operate_motor():
+def operate_motor(angle):
     print("Went into operate_motor() function")
-    servo.mid()
-    time.sleep(2)
-    servo.min()
+    duty = angle / 18 + 2
+    GPIO.output(3, True)
+    pwm.ChangeDutyCycle(duty)
+    sleep(1)
+    GPIO.output(3, False)
+    pwm.ChangeDutyCycle(0)
 
 
 if __name__ == "__main__":
