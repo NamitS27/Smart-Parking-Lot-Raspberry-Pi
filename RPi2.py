@@ -106,7 +106,7 @@ def open_gate():
     response = requests.get(
         "https://iot-smart-parking-lot.herokuapp.com/fetch-otp-status")
     response = response.json()
-    otp_status = response['otp_status']
+    otp_status = response['status']
     print(f"OTP Status : {otp_status}")
     if otp_status == 'success':
         # lcd.clear()
