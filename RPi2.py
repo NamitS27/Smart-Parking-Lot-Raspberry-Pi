@@ -114,7 +114,9 @@ def open_gate():
     print(f"OTP Status : {otp_status}")
     if otp_status == 'success':
         # lcd.clear()
-        operate_motor(90)
+        operate_motor(180)
+        time.sleep(2)
+        operate_motor(0)
 
 
 def operate_motor(angle):
@@ -130,4 +132,4 @@ def operate_motor(angle):
 if __name__ == "__main__":
     while True:
         detect_car_at_entry_gate()
-        time.sleep(5)
+        time.sleep(2)
