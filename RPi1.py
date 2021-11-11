@@ -10,7 +10,7 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 # Set buzzer - pin 23 as output
-buzzer = 23
+buzzer = 25
 GPIO.setup(buzzer, GPIO.OUT)
 
 
