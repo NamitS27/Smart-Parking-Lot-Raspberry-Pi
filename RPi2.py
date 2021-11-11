@@ -85,7 +85,9 @@ def detect_car_at_entry_gate():
             generate_otp()
             for i in range(3):
                 time.sleep(20)
-                open_gate()
+                isOpened = open_gate()
+                if isOpened:
+                    break
 
 
 def generate_otp():
@@ -117,6 +119,8 @@ def open_gate():
         operate_motor(180)
         time.sleep(2)
         operate_motor(0)
+        return True
+    return False
 
 
 def operate_motor(angle):

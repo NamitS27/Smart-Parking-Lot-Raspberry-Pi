@@ -15,18 +15,14 @@ GPIO.setup(buzzer, GPIO.OUT)
 GPIO.setmode(GPIO.BCM)
 
 parking_lot_map = {
-    (20, 21): 1,
-    (16, 18): 2,
-    (9, 10): 3,
-    (7, 8): 4,
-    (5, 6): 5,
-    (3, 4): 6,
-    (2, 3): 7,
-    (0, 1): 8
+    (23, 24): 1,
+    (20, 21): 2,
+    (13, 19): 3,
+    (17, 27): 4,
 }
 
 
-def measure_vehicle_distance(ECHO, TRIG):
+def measure_vehicle_distance(TRIG, ECHO):
     print("Went into measure_vehicle_distance() function")
     print("Distance measurement is in progress . . . .")
     GPIO.setup(TRIG, GPIO.OUT)
@@ -37,9 +33,9 @@ def measure_vehicle_distance(ECHO, TRIG):
     GPIO.output(TRIG, True)
     time.sleep(0.00001)
     GPIO.output(TRIG, False)
-    while not GPIO.input(ECHO):
+    while GPIO.input(ECHO) == 0:
         pulse_start = time.time()
-    while GPIO.input(ECHO):
+    while GPIO.input(ECHO) == 1:
         pulse_end = time.time()
     pulse_duration = pulse_end - pulse_start
     distance = pulse_duration * 17150
@@ -60,16 +56,16 @@ def fetch_parking_lot_status():
     return parking_lot_status
 
 
-def detect_vehicle(ECHO, TRIG):
+def detect_vehicle(TRIG, ECHO):
     print("Went into detect_vehicle() function")
-    distance = measure_vehicle_distance(ECHO, TRIG)
-    if distance < 0.5:
-        print("Distance is less than 0.5")
+    distance = measure_vehicle_distance(TRIG, ECHO)
+    if distance < 3:
+        print("Distance is less than 3")
         call_buzzer(True)
-    elif distance < 1.5:
-        print("Distance is < 1.5 & >= 0.5")
+    elif distance < 5:
+        print("Distance is < 5 & >= 3")
         call_buzzer(False)
-        update_parking_lot_status(parking_lot_map[(ECHO, TRIG)])
+        update_parking_lot_status(parking_lot_map[(TRIG, ECHO)])
     else:
         print("No vehicle detected")
 
