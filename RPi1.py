@@ -9,7 +9,7 @@ from time import sleep
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-# Set buzzer - pin 23 as output
+# Set buzzer - pin 25 as output
 buzzer = 25
 GPIO.setup(buzzer, GPIO.OUT)
 
